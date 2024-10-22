@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Videos</title>
+</head><style>body{
+    margin: 0px;
+    padding: 0px;
+    height: 100%;
+    background-color: rgb(55, 12, 95);
+}
+
+.Home{
+    width: 100%;
+    height: 100%;
+}
+
+.hel{
+    width: 100%;
+    
+    height: 95px;
+    align-items:center;
+    justify-content:left;
+    position:initial;
+    
+    padding: 0px 0px;
+    box-sizing: border-box;
+    position: fixed;
+}
+.ico{
+    width: 100%;
+    
+    height: 95px;
+    align-items:center;
+    justify-content:right;
+    position:initial;
+    
+    padding: 0px 2px;
+    box-sizing: border-box;
+    position: fixed;
+}
+.content{
+    text-align:center;
+   
+  
+}
+.content h1{
+    font-size: 54px; 
+}
+.btnPrimary{
+    width: 240px;
+    height: 48px;
+   
+    border: none;
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin: 24px;
+    cursor: pointer;
+    transition: all 1s ease;
+    display: flex;
+    font-family: Arial, Helvetica, sans-serif;
+    border-radius: 10px;
+    background-color:blueviolet;
+    color: black;
+    text-decoration: none;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    margin-bottom: 300px; 
+}
+.btnSecundary{
+    width: 240px;
+    height: 48px;
+    border: none;
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin: 24px;
+    cursor: pointer;
+    transition: all 1s ease;
+    display: flex;
+    font-family: Arial, Helvetica, sans-serif;
+    border-radius: 10px;
+    background-color:blueviolet;
+    color: black;
+    text-decoration: none;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+.opciones{
+    width: 100%;
+    height: 100%;
+    background-color: rgb(55, 12, 95);
+    display:flex;
+    justify-content: center;
+    padding: 0px 10%;
+    box-sizing: border-box;
+}
+.center-form {
+  width: 50%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; 
+
+}
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    top: calc(50% - 150px);
+    left: 0;
+    right: 0;
+}
+.Titulo {
+    width: 100%;
+    background-color: rgb(55, 12, 95);
+    text-align: center;
+    margin-bottom: 10px;
+
+}.btn{width: 240px;
+    height: 48px;
+    border: none;
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin: 24px;
+    cursor: pointer;
+    transition: all 1s ease;
+    
+    font-family: Arial, Helvetica, sans-serif;
+    border-radius: 10px;
+    background-color:rgb(208, 6, 6);
+    color: white;
+    
+    align-items: center;
+    justify-content: center;
+}
+  </style>
+<body> <div class="navbar">
+
+</div>
+
+<div class="ico">
+    <img src="imagenes/icono.svg.svg" alt="">
+</div>
+
+<div class="cover">
+    <div class="content">
+    <h1>Videos enviados</h1>
+    <table>
+        <tr>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Video</th>
+            <th>PDF</th>  <!-- Agregar columna PDF -->
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+                <video width="320" height="240" controls>
+                    <source src="{{ url_for('static', filename='uploads/' + user.video_filename) }}" type="video/mp4">
+                    Tu navegador no soporta la reproducción de videos.
+                </video>
+                <form action="{{ url_for('delete_video', video_id=user.id) }}" method="POST" style="display: inline;">
+                    <button type="submit">Eliminar</button>
+                </form>
+            </td>
+            <td>  <!-- Agregar celda para PDF -->
+                {% if user.pdf_filename %}
+                    <a href="{{ url_for('static', filename='uploads/' + user.pdf_filename) }}" target="_blank">{{ user.pdf_filename }}</a>
+                {% else %}
+                    No se proporcionó
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h1>Postulaciones exitosas</h1>
+    <ul>
+        {% for user in users %}
+            <li>
+                {{ user.name }} - {{ user.email }}<br>
+                <video width="320" height="240" controls>
+                    <source src="{{ url_for('static', filename='uploads/' + user.video_filename) }}" type="video/mp4">
+                    Tu navegador no soporta la reproducción de videos.
+                </video>
+                <!-- Agregar enlace al archivo PDF -->
+                {% if user.pdf_filename %}
+                    <p>Documento PDF: <a href="{{ url_for('static', filename='uploads/' + user.pdf_filename) }}" target="_blank">{{ user.pdf_filename }}</a></p>
+                {% else %}
+                    <p>Documento PDF: No se proporcionó</p>
+                {% endif %}
+                <form action="{{ url_for('delete_video', video_id=user.id) }}" method="POST" style="display: inline;">
+                    <button type="submit">Eliminar</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+</div>
+</body>
+</html>

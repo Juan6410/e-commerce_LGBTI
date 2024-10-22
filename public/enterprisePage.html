@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head >
+  <meta charset="UTF-8">
+  <title>Perfil</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 24px;
+            margin-bottom: 20px;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://www.acurax.com/wp-content/themes/acuraxsite/images/inner_page_bnr.jpg?x26444");
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+        }
+        
+        .avatar {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+        }
+        
+        .user-name {
+            font-size: 24px;
+            margin-top: 14px;
+        }
+        
+        .socials {
+            list-style: none;
+            text-align: center;
+            padding: 0;
+            margin-top: 20px;
+        }
+        
+        .socials li {
+            display: inline-block;
+            margin: 5px;
+        }
+        
+        a {
+            text-decoration: none;
+            color: #ad0000;
+        }
+        
+        a:hover {
+            color: #dd1919;
+        }
+        
+        .container {
+            display: flex;
+            justify-content: space-between;
+            gap: 50px;
+            margin: 20px;
+        }
+        
+        .column {
+            flex-basis: 30%;
+            background-color: #fff;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        
+        h3 {
+            font-size: 24px;
+            margin-top: 0;
+        }
+        
+        p {
+            margin-top: 0;
+        }
+    </style>
+</head  >
+<body >
+    <div class="header">
+        <img class="avatar" src="https://th.bing.com/th/id/R.c22eb54c2e8caa409b1e5751176fda61?rik=2x9jfCm6woQSJw&riu=http%3a%2f%2fwww.buu.ac.th%2fpic_profile%2fframes%2fdefault.png&ehk=KPOOBt4aXenhq0ohfQjiaqJaG77eGA3ObY8GGobwA%2fE%3d&risl=&pid=ImgRaw&r=0" width="640" height="480" />
+        <h1 class="user-name" id="nombre"></h1>
+    </div>
+    <div>
+        <div class="container">
+            <div class="column">
+                <h1>Correo electronico:</h1>
+                <h2 id="email"></h2>
+            </div>
+            <div class="column">
+                <h1>Tipo de Empresa:</h1>
+                <h2 id="type"></h2>
+            </div>
+            <div class="column">
+                <h1>Telefono:</h1>
+                <h2 id="phone"></h2>
+            </div>
+            <div class="column">
+                <h1>Localización:</h1>
+                <h2 id="location"></h2>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    // Realiza una solicitud GET para obtener los usuarios
+    // Realiza una solicitud GET para obtener los usuarios
+fetch('/enterprisePage')
+  .then(response => response.json())
+  .then(data => {
+    console.log(data.phone)
+
+    const nombre = data.name;
+    const email = data.email;
+    const type = data.type;
+    const phone = data.phone;
+    const location = data.location;
+    
+
+    // Agrega los datos a los elementos h1
+    document.getElementById('nombre').textContent = nombre;
+    document.getElementById('email').textContent = email;
+    document.getElementById('type').textContent = type;
+    document.getElementById('phone').textContent = phone;
+    document.getElementById('location').textContent = location;
+    
+    
+  })
+  .catch(error => {
+    console.error(error);
+  });
+</script>
+</html>
